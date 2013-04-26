@@ -7,6 +7,9 @@ $app = new Silex\Application();
 use poche\Functions;
 use poche\Readability;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Silex\Route;
+use Silex\Controller;
 
 $functions = new Functions();
 
@@ -53,10 +56,16 @@ $app->get('delete/{id}', function($id) use ($app) {
 # add entry
 $app->get('add/{url}', function($url) use ($app, $functions) {
     $data = $functions->fetchContent($url);
-    $sql = "INSERT INTO entries (url, title, content) VALUES (?, ?, ?) ";
-    $entry = $app['db']->fetchAssoc($sql, array($url, $data['title'], $data['content']));
+    if (!empty($data)) {
+        $sql = "INSERT INTO entries (url, title, content) VALUES (?, ?, ?) ";
+        $entry = $app['db']->fetchAssoc($sql, array($url, $data['title'], $data['content']));
+    }
+
     return $app->redirect('/');
 })->assert('url', '.+');
+
+$app['routes']->add('GET_add_url',$route);
+
 
 $app['debug'] = true;
 $app->run();

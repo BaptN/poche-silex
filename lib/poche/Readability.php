@@ -601,7 +601,7 @@ class Readability
         for ($pt=0; $pt < count($nodesToScore); $pt++) {
             $parentNode      = $nodesToScore[$pt]->parentNode;
             // $grandParentNode = $parentNode ? $parentNode->parentNode : null;
-            $grandParentNode = !$parentNode ? null : (($parentNode->parentNode instanceof DOMElement) ? $parentNode->parentNode : null);
+            $grandParentNode = !$parentNode ? null : (($parentNode->parentNode instanceof \DOMElement) ? $parentNode->parentNode : null);
             $innerText       = $this->getInnerText($nodesToScore[$pt]);
 
             if (!$parentNode || !isset($parentNode->tagName)) {
@@ -674,7 +674,7 @@ class Readability
         if ($topCandidate === null || strtoupper($topCandidate->tagName) == 'BODY')
         {
             $topCandidate = $this->dom->createElement('div');
-            if ($page instanceof DOMDocument) {
+            if ($page instanceof \DOMDocument) {
                 if (!isset($page->documentElement)) {
                     // we don't have a body either? what a mess! :)
                 } else {

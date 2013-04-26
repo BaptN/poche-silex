@@ -34,8 +34,7 @@ class Functions {
             }
             $output['content'] = $content;
         } else {
-            $output['title'] = 'Oops';
-            $output['content'] = 'Looks like we couldn\'t find the content.';
+            return FALSE;
         }
 
         return $output;
