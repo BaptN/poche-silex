@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]> <html class="no-js ie6 ie67 ie678" lang="en"> <![endif]-->
+<!--[if lte IE 7]> <html class="no-js ie7 ie67 ie678" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="no-js ie8 ie678" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=10">
+        {% block head %}
+            <title>{% block title %}{% endblock %} - poche</title>
+        {% endblock %}
+        <link rel="shortcut icon" type="image/x-icon" href="{{ app.request.basepath }}/assets/img/favicon.ico" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ app.request.basepath }}/assets/img/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ app.request.basepath }}/assets/img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="{{ app.request.basepath }}/assets/img/apple-touch-icon-precomposed.png">
+        <link href="{{ app.request.basepath }}/assets/css/knacss.css" rel="stylesheet" media="all" />
+        <link href="{{ app.request.basepath }}/assets/css/style.css" rel="stylesheet" media="all" />
+        <link href="{{ app.request.basepath }}/assets/css/style-light.css" rel="stylesheet" media="all" title="light-style" />
+        <link href="{{ app.request.basepath }}/assets/css/style-dark.css" rel="alternate stylesheet" media="all" title="dark-style" />
+    </head>
+    <body class="light-style">
+        <header>
+            <h1><a href="/"><img src="{{ app.request.basepath }}/assets//img/logo.png" alt="logo poche" /></a>poche</h1>
+        </header>
+        <div id="main">
+            <ul id="links">
+                <li><a href="/" class="current"{/if}>home</a></li>
+            </ul>
+
+            {% block content %}{% endblock %}
+
+        </div>
+        <footer class="mr2 mt3 smaller">
+            <p>powered by <a href="http://inthepoche.com">poche</a><br />follow us on <a href="https://twitter.com/getpoche" title="follow us on twitter">twitter</a></p>
+        </footer>
+
+    </body>
+</html>

@@ -1,0 +1,10 @@
+{% extends "structure.twig" %}
+
+{% block title %}Reading &laquo;{{entry.title}}&raquo;{% endblock %}
+
+{% block content %}
+<h2>{{entry.title}}</h2>
+<div>
+    {{entry.content|raw}}
+</div>
+{% endblock %}
