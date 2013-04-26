@@ -4,8 +4,7 @@ namespace poche;
 class Functions {
 
     function __construct()
-    {
-    }
+    {}
 
     public function fetchContent($url) {
         $html = file_get_contents($url);

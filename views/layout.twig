@@ -27,10 +27,10 @@
         <div id="main">
             <ul id="links">
                 <li><a href="/" class="current"{/if}>home</a></li>
+                <li><a href="javascript:void((function(){var%20url%20=%20location.href%20||%20url;window.open('http://silex.localhost/add/'+url,'_self');})())" style="cursor: move;">poche it</a></li>
             </ul>
-
             {% block content %}{% endblock %}
-
+            {% block js %}{% endblock %}
         </div>
         <footer class="mr2 mt3 smaller">
             <p>powered by <a href="http://inthepoche.com">poche</a><br />follow us on <a href="https://twitter.com/getpoche" title="follow us on twitter">twitter</a></p>

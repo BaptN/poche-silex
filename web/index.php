@@ -6,6 +6,7 @@ $app = new Silex\Application();
 
 use poche\Functions;
 use poche\Readability;
+use Symfony\Component\HttpFoundation\Response;
 
 $functions = new Functions();
 
@@ -16,13 +17,12 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'driver'   => 'pdo_sqlite',
-        'path'     => __DIR__.'/poche.sqlite',
+        'path'     => __DIR__.'/../storage/poche.sqlite',
     ),
 ));
 
 # home
 $app->get('/', function() use ($app) {
-
     $sql = "SELECT * FROM entries ORDER BY id";
     $entries = $app['db']->fetchAll($sql);
 
@@ -31,19 +31,32 @@ $app->get('/', function() use ($app) {
     ));
 });
 
-# view article
+# view entry
 $app->get('view/{id}', function($id) use ($app) {
-
     $sql = "SELECT * FROM entries WHERE id = ?";
     $entry = $app['db']->fetchAssoc($sql, array(intval($id)));
-
-    error_log(print_r($entry, true));
-
-    return $app['twig']->render('view.twig', array(
-        'entry' => $entry,
-    ));
-
+    if (empty($entry))
+        $app->abort(404);
+    else
+        return $app['twig']->render('view.twig', array(
+            'entry' => $entry,
+        ));
 });
+
+# delete entry
+$app->get('delete/{id}', function($id) use ($app) {
+    $sql = "DELETE FROM entries WHERE id = ?";
+    $app['db']->fetchAssoc($sql, array(intval($id)));
+    return $app->redirect('/');
+})->assert('id', '\d+');
+
+# add entry
+$app->get('add/{url}', function($url) use ($app, $functions) {
+    $data = $functions->fetchContent($url);
+    $sql = "INSERT INTO entries (url, title, content) VALUES (?, ?, ?) ";
+    $entry = $app['db']->fetchAssoc($sql, array($url, $data['title'], $data['content']));
+    return $app->redirect('/');
+})->assert('url', '.+');
 
 $app['debug'] = true;
 $app->run();
