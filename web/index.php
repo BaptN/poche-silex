@@ -64,8 +64,5 @@ $app->get('add/{url}', function($url) use ($app, $functions) {
     return $app->redirect('/');
 })->assert('url', '.+');
 
-$app['routes']->add('GET_add_url',$route);
-
-
 $app['debug'] = true;
 $app->run();
