@@ -26,8 +26,8 @@
         </header>
         <div id="main">
             <ul id="links">
-                <li><a href="/" class="current"{/if}>home</a></li>
-                <li><a href="javascript:void((function(){var%20url%20=%20location.href%20||%20url;window.open('http://silex.localhost/add/'+url,'_self');})())" style="cursor: move;">poche it</a></li>
+                <li><a href="/" class="current">home</a></li>
+                <li><a href="javascript:void((function(){var%20url%20=%20location.href%20||%20url;window.open('{{app.request.basepath}}/add/'+url,'_self');})())" style="cursor: move;">poche it</a></li>
             </ul>
             {% block content %}{% endblock %}
             {% block js %}{% endblock %}

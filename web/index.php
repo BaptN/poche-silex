@@ -54,15 +54,22 @@ $app->get('delete/{id}', function($id) use ($app) {
 })->assert('id', '\d+');
 
 # add entry
-$app->get('add/{url}', function($url) use ($app, $functions) {
+$route =  new Route('/add/{url}',array(),array('url'=>'.+'));
+$route->setDefault('_controller', function($url) use ($app, $functions) {
+
+
+    $url .= ( null === $query = $app['request']->getQueryString()) ? '' : sprintf('?%s', $query);
     $data = $functions->fetchContent($url);
+    
     if (!empty($data)) {
         $sql = "INSERT INTO entries (url, title, content) VALUES (?, ?, ?) ";
         $entry = $app['db']->fetchAssoc($sql, array($url, $data['title'], $data['content']));
     }
 
     return $app->redirect('/');
-})->assert('url', '.+');
+});
+
+$app['routes']->add('GET_add_url',$route);
 
 $app['debug'] = true;
 $app->run();
